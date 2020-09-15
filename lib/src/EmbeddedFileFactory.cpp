@@ -95,7 +95,7 @@ std::unique_ptr<EmbeddedFile> EmbeddedFileFactory::CreateEmbeddedFile(char *buff
     return std::unique_ptr<EmbeddedFile>(new EmbeddedObject(buffer, bufferSize));
   }
 
-  return llvm::make_unique<EmbeddedFile>(buffer, bufferSize);
+  return std::make_unique<EmbeddedFile>(buffer, bufferSize);
 }
 
 std::unique_ptr<EmbeddedFile> EmbeddedFileFactory::CreateEmbeddedFile(char *buffer,
@@ -122,14 +122,14 @@ std::unique_ptr<EmbeddedFile> EmbeddedFileFactory::CreateEmbeddedFile(char *buff
   case EmbeddedFile::Type::Exports:
     return std::unique_ptr<EmbeddedFile>(new EmbeddedExports(buffer, bufferSize));
   case EmbeddedFile::Type::File:
-    return llvm::make_unique<EmbeddedFile>(buffer, bufferSize);
+    return std::make_unique<EmbeddedFile>(buffer, bufferSize);
   case EmbeddedFile::Type::Object:
     return std::unique_ptr<EmbeddedFile>(new EmbeddedObject(buffer, bufferSize));
   case EmbeddedFile::Type::Xar:
     return std::unique_ptr<EmbeddedFile>(new EmbeddedXar(buffer, bufferSize));
   }
 
-  return llvm::make_unique<EmbeddedFile>(buffer, bufferSize);
+  return std::make_unique<EmbeddedFile>(buffer, bufferSize);
 
 }
 }  // namespace ebc
