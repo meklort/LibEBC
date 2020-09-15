@@ -285,7 +285,11 @@ class BitcodeRetriever::Impl {
 
     for (auto it = begin; it != end; ++it) {
       StringRef sectName;
-      it->getName(sectName);
+      if (auto NameOrErr = it->getName())
+        sectName = *NameOrErr;
+      else
+        consumeError(NameOrErr.takeError());
+
 
       if (sectName == ".llvmbc" || sectName == "__bitcode") {
         assert(!bitcodeContainer && "Multiple bitcode sections!");
